@@ -10,20 +10,16 @@ MONGODB_HOST = '34.210.191.245'
 MONGODB_PORT = 27017
 DBS_NAME = 'main'
 COLLECTION_NAME = 'startups'
+FUNDS = {'name': True, 'funding_rounds': True, '_id': False}
 connection = MongoClient(MONGODB_HOST, MONGODB_PORT)
 collection = connection[DBS_NAME][COLLECTION_NAME]
-FUNDS = {'name': True, 'funding_rounds': True, '_id': False}
-
-@app.route("/")
-def index():
-    return render_template("index.html")
 
 @app.route("/data/flare.json")
 def flare():
     return render_template("flare.json")
 
-@app.route('/updateFundingsData')
-def getAllFundsAlpha():
+@app.route('/')
+def main():
     funds_collection = collection.find(projection=FUNDS)
     
     not_filtered = []
@@ -59,8 +55,8 @@ def getAllFundsAlpha():
 
     with open('templates/flare.json', 'w') as outfile:
         output = json.dump(output, outfile)
+    
     connection.close()
-
-    return 'Data updated!'
+    return render_template("index.html")
 
 app.run(host='0.0.0.0',port=5000,debug=True)
