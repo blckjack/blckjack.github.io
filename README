@@ -1,1 +1,5 @@
-init
+Optimize existed MongoDB table - done
+Wrap into Docker
+Set up CI (jenkins?)
+AWS config
+Terraform implementation
