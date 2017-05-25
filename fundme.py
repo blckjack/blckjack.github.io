@@ -4,15 +4,15 @@ from pymongo import MongoClient
 import collections
 import json
 
-app = Flask(__name__)
-
 MONGODB_HOST = '34.210.191.245'
 MONGODB_PORT = 27017
 DBS_NAME = 'main'
 COLLECTION_NAME = 'startups'
 FUNDS = {'name': True, 'funding_rounds': True, '_id': False}
+
 connection = MongoClient(MONGODB_HOST, MONGODB_PORT)
 collection = connection[DBS_NAME][COLLECTION_NAME]
+app = Flask(__name__)
 
 @app.route("/data/flare.json")
 def flare():
@@ -59,4 +59,4 @@ def main():
     connection.close()
     return render_template("index.html")
 
-app.run(host='0.0.0.0',port=5000,debug=True)
+app.run(host='0.0.0.0', port=5000)
