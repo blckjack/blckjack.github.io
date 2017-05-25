@@ -1,11 +1,8 @@
 from flask import Flask
 from flask import render_template
 from pymongo import MongoClient
-from bson import json_util
-from bson.json_util import dumps
 import collections
 import json
-import re
 
 app = Flask(__name__)
 
@@ -65,23 +62,5 @@ def getAllFundsAlpha():
     connection.close()
 
     return 'Data updated!'
-
-
-def pure_number(s):
-    s = re.sub('^\\D*', '', s)
-    mult = 1
-    
-    num_replace = {
-        'B' : 1000000000,
-        'M' : 1000000,
-        'k' : 1000
-    }
-    
-    while s[-1] in num_replace:
-        mult *= num_replace[s[-1]]
-        s = s[:-1]
-
-    return float(s) * mult
-
 
 app.run(host='0.0.0.0',port=5000,debug=True)
