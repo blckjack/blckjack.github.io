@@ -3,6 +3,7 @@ from flask import render_template
 from pymongo import MongoClient
 import collections
 import json
+import ssl
 
 MONGODB_HOST = '34.210.191.245'
 MONGODB_PORT = 27017
@@ -21,7 +22,7 @@ def flare():
 @app.route('/')
 def main():
     funds_collection = collection.find(projection=FUNDS)
-    
+
     not_filtered = []
     for i in funds_collection:
         for k in i['funding_rounds']:
@@ -30,9 +31,9 @@ def main():
                 'children': {'name': i['name'], 'size': k['raised_amount']}
             }
             not_filtered.append(temp)
-
+    print not_filtered
     final_structure = []
-    year = 2005
+    year = 2012
     while year < 2015:
         i = 0
         filtered_data = []
@@ -59,4 +60,8 @@ def main():
     connection.close()
     return render_template("index.html")
 
-app.run(host='0.0.0.0', port=5000)
+app.run(host='0.0.0.0', port=5000, debug=True)
+
+# ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+# ctx.load_cert_chain('/etc/pki/tls/private/ssl.cert', '/etc/pki/tls/private/ssl.key')
+# app.run(use_reloader=True, host='0.0.0.0',port=443,ssl_context =ctx)
