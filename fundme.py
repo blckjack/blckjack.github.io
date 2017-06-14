@@ -60,8 +60,8 @@ def main():
     connection.close()
     return render_template("index.html")
 
-app.run(host='0.0.0.0', port=5000, debug=True)
+# app.run(host='0.0.0.0', port=5000, debug=True)
 
-# ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
-# ctx.load_cert_chain('/etc/pki/tls/private/ssl.cert', '/etc/pki/tls/private/ssl.key')
-# app.run(use_reloader=True, host='0.0.0.0',port=443,ssl_context =ctx)
+ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+ctx.load_cert_chain('/etc/pki/tls/private/ssl.cert', '/etc/pki/tls/private/ssl.key')
+app.run(use_reloader=True, host='0.0.0.0',port=443,ssl_context =ctx)
