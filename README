@@ -1,4 +1,4 @@
-Mongodb -> Pymongo -> Flask -> D3.js (sunburst)
+   .   Mongodb -> Flask -> D3.js (sunburst)
 Jenkins
 Ansible
-Served on AWS
+EC2
