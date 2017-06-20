@@ -3,15 +3,15 @@ from flask import render_template
 from pymongo import MongoClient
 import collections
 import json
-import ssl
 
-MONGODB_HOST = '34.210.191.245'
+MONGODB_HOST = '127.0.0.1'
 MONGODB_PORT = 27017
-DBS_NAME = 'main'
-COLLECTION_NAME = 'startups'
+DBS_NAME = 'admin'
+COLLECTION_NAME = 'companies'
 FUNDS = {'name': True, 'funding_rounds': True, '_id': False}
 
 connection = MongoClient(MONGODB_HOST, MONGODB_PORT)
+connection.admin.authenticate('admin', 'admin123')
 collection = connection[DBS_NAME][COLLECTION_NAME]
 app = Flask(__name__)
 
@@ -60,8 +60,4 @@ def main():
     connection.close()
     return render_template("index.html")
 
-# app.run(host='0.0.0.0', port=5000, debug=True)
-
-ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
-ctx.load_cert_chain('/etc/pki/tls/private/ssl.cert', '/etc/pki/tls/private/ssl.key')
-app.run(use_reloader=True, host='0.0.0.0',port=443,ssl_context =ctx)
+app.run(host='0.0.0.0', port=80)
